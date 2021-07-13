@@ -48,6 +48,7 @@ cc_library(
         "//mediapipe/calculators/image:image_properties_calculator",
         "//mediapipe/calculators/util:annotation_overlay_calculator",
         "//mediapipe/modules/slr_landmark:slr_landmark_gpu",
+        "//mediapipe/modules/slr_detection:slr_detection_gpu",
     ],
 )
 

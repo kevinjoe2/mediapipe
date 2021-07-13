@@ -78,6 +78,7 @@ class InferenceCalculatorGlImpl
 
   bool use_kernel_caching_ = false;
   std::string cached_kernel_filename_;
+  std::string nombre_modelo_;
 };
 
 absl::Status InferenceCalculatorGlImpl::UpdateContract(CalculatorContract* cc) {
@@ -99,6 +100,8 @@ absl::Status InferenceCalculatorGlImpl::Open(CalculatorContext* cc) {
   use_kernel_caching_ = use_advanced_gpu_api_ &&
                         options.delegate().gpu().has_cached_kernel_path();
   use_gpu_delegate_ = !use_advanced_gpu_api_;
+
+  nombre_modelo_ = options.model_path();
 
   if (use_kernel_caching_) {
 #ifdef MEDIAPIPE_ANDROID
@@ -188,7 +191,7 @@ absl::Status InferenceCalculatorGlImpl::Process(CalculatorContext* cc) {
         }));
   }
   // Output tensors are already bound if use_advanced_gpu_api_ is true.
-
+  
   kOutTensors(cc).Send(std::move(output_tensors));
   return absl::OkStatus();
 }

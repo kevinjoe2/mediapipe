@@ -1,0 +1,15 @@
+NecesitoComerAlgo
+CortarCarne
+NesecitoUnaCuchara
+NecesitoUnCuchillo
+PorfavorLaCuenta
+MuyDeliciosaLaComida
+NecesitoLavarmeLasManos
+ParaLLevarPorfavor
+DondeHayUnRestaurante
+UnaServilletaPorfavor
+UnSorbetePorfavor
+CuantoSeDemora
+NecesitoUnTenedor
+NecesitoTomarAlgo
+UnVasoPorfavor

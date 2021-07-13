@@ -69,5 +69,20 @@ node {
   calculator: "AnnotationOverlayCalculator"
   input_stream: "IMAGE_GPU:throttled_input_video"
   input_stream: "VECTOR:render_data_vector"
+  output_stream: "IMAGE_GPU:output_video_pre"
+}
+
+node {
+  calculator: "SlrDetectionGpu"
+  input_stream: "IMAGE:output_video_pre"
+  output_stream: "MEANINGSIGNAL:slr_meaning_render_data"
+}
+
+# Draws annotations and overlays them on top of the input images.
+node {
+  calculator: "AnnotationOverlayCalculator"
+  input_stream: "IMAGE_GPU:throttled_input_video"
+  input_stream: "slr_meaning_render_data"
+  input_stream: "VECTOR:render_data_vector"
   output_stream: "IMAGE_GPU:output_video"
 }

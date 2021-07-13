@@ -152,11 +152,12 @@ absl::Status TensorsToClassificationCalculator::Process(CalculatorContext* cc) {
           classification_list->add_classification();
       classification->set_index(i);
       classification->set_score(raw_scores[i]);
-
+      LOG(ERROR) << i << ":" << raw_scores[i] << ",  ";
       if (label_map_loaded_) {
         classification->set_label(label_map_[i]);
       }
     }
+    LOG(ERROR) << "\n";
   }
 
   // Note that partial_sort will raise error when top_k_ >

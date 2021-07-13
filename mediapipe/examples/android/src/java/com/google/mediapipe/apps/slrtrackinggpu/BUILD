@@ -40,6 +40,8 @@ android_binary(
         "//mediapipe/modules/hand_landmark:hand_landmark.tflite",
         "//mediapipe/modules/hand_landmark:handedness.txt",
         "//mediapipe/modules/slr_landmark:hand_recrop.tflite",
+        "//mediapipe/modules/slr_detection:slr_meaning.txt",
+        "//mediapipe/modules/slr_detection:slr_model.tflite",
         "//mediapipe/modules/pose_detection:pose_detection.tflite",
         "//mediapipe/modules/pose_landmark:pose_landmark_full.tflite",
     ],
