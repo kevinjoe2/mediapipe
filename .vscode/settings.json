@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "algorithm": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "random": "cpp",
+        "valarray": "cpp",
+        "barrier": "cpp",
+        "__functional_03": "cpp",
+        "functional": "cpp",
+        "ostream": "cpp"
+    }
+}

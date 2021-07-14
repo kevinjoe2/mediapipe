@@ -44,6 +44,7 @@
 #include "mediapipe/gpu/MPPMetalHelper.h"
 #elif MEDIAPIPE_OPENGL_ES_VERSION >= MEDIAPIPE_OPENGL_ES_31
 #include "mediapipe/calculators/tensor/image_to_tensor_converter_gl_buffer.h"
+#include "mediapipe/calculators/tensor/image_to_tensor_converter_gl_buffer_slr.h"
 #include "mediapipe/gpu/gl_calculator_helper.h"
 #else
 #include "mediapipe/calculators/tensor/image_to_tensor_converter_gl_texture.h"
@@ -177,6 +178,7 @@ class ImageToTensorCalculator : public Node {
     output_height_ = options_.output_tensor_height();
     range_min_ = options_.output_tensor_float_range().min();
     range_max_ = options_.output_tensor_float_range().max();
+    model_name_ = options_.model_name();
 
     return absl::OkStatus();
   }
@@ -231,6 +233,10 @@ class ImageToTensorCalculator : public Node {
                      (image->UsesGpu() ? gpu_converter_ : cpu_converter_)
                          ->Convert(*image, roi, {output_width_, output_height_},
                                    range_min_, range_max_));
+
+    if (model_name_ == "SLR") {
+      LOG(ERROR) << "model_name_:"<<model_name_ << " ==> TENSOR ==> " << tensor.shape().num_elements() << " : " << tensor.shape().dims.size();
+    }
 
     auto result = std::make_unique<std::vector<Tensor>>();
     result->push_back(std::move(tensor));
@@ -292,9 +298,16 @@ class ImageToTensorCalculator : public Node {
         ASSIGN_OR_RETURN(gpu_converter_,
                          CreateMetalConverter(cc, GetBorderMode()));
 #elif MEDIAPIPE_OPENGL_ES_VERSION >= MEDIAPIPE_OPENGL_ES_31
-        ASSIGN_OR_RETURN(gpu_converter_,
+        if (model_name_ == "SLR") {
+          ASSIGN_OR_RETURN(gpu_converter_,
+                         CreateImageToGlBufferTensorConverterSlr(
+                             cc, DoesGpuInputStartAtBottom(), GetBorderMode()));
+        } else {
+          ASSIGN_OR_RETURN(gpu_converter_,
                          CreateImageToGlBufferTensorConverter(
                              cc, DoesGpuInputStartAtBottom(), GetBorderMode()));
+        }
+        
 #else
         ASSIGN_OR_RETURN(gpu_converter_,
                          CreateImageToGlTextureTensorConverter(
@@ -323,6 +336,7 @@ class ImageToTensorCalculator : public Node {
   int output_height_ = 0;
   float range_min_ = 0.0f;
   float range_max_ = 1.0f;
+  std::string model_name_;
 };
 
 MEDIAPIPE_REGISTER_NODE(ImageToTensorCalculator);

@@ -63,4 +63,6 @@ message ImageToTensorCalculatorOptions {
   //
   // BORDER_REPLICATE is used by default.
   optional BorderMode border_mode = 6;
+
+  optional string model_name = 7;
 }

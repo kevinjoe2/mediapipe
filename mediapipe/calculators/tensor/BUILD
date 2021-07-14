@@ -507,6 +507,7 @@ cc_library(
     deps = select({
         "//mediapipe:android": [
             ":image_to_tensor_converter_gl_buffer",
+            ":image_to_tensor_converter_gl_buffer_slr",
             "//mediapipe/gpu:gl_calculator_helper",
             "//mediapipe/gpu:gpu_buffer",
         ],
@@ -518,6 +519,7 @@ cc_library(
         ],
         "//conditions:default": [
             ":image_to_tensor_converter_gl_buffer",
+            ":image_to_tensor_converter_gl_buffer_slr",
             "//mediapipe/gpu:gl_calculator_helper",
             "//mediapipe/gpu:gpu_buffer",
         ],
@@ -628,6 +630,39 @@ cc_library(
     name = "image_to_tensor_converter_gl_buffer",
     srcs = ["image_to_tensor_converter_gl_buffer.cc"],
     hdrs = ["image_to_tensor_converter_gl_buffer.h"],
+    deps = ["//mediapipe/framework:port"] + select({
+        "//mediapipe:apple": [],
+        "//conditions:default": [
+            ":image_to_tensor_converter",
+            ":image_to_tensor_converter_gl_utils",
+            ":image_to_tensor_utils",
+            "@com_google_absl//absl/strings",
+            "//mediapipe/framework:calculator_framework",
+            "//mediapipe/framework/formats:rect_cc_proto",
+            "//mediapipe/framework/formats:tensor",
+            "//mediapipe/framework/port:ret_check",
+            "//mediapipe/framework/port:status",
+            "//mediapipe/framework/port:statusor",
+            "//mediapipe/gpu:gl_calculator_helper",
+            "//mediapipe/framework/formats:image",
+            "//mediapipe/gpu:gpu_buffer_format",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/common:shape",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/common:types",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:command_queue",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:gl_buffer",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:gl_call",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:gl_texture",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:request_gpu_info",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl:variable",
+            "@org_tensorflow//tensorflow/lite/delegates/gpu/gl/converters:util",
+        ],
+    }),
+)
+
+cc_library(
+    name = "image_to_tensor_converter_gl_buffer_slr",
+    srcs = ["image_to_tensor_converter_gl_buffer_slr.cc"],
+    hdrs = ["image_to_tensor_converter_gl_buffer_slr.h"],
     deps = ["//mediapipe/framework:port"] + select({
         "//mediapipe:apple": [],
         "//conditions:default": [

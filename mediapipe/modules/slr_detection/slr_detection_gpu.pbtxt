@@ -25,9 +25,26 @@ node {
         max: 1.0
       }
       gpu_origin: TOP_LEFT
+      model_name: "SLR"
     }
   }
 }
+
+# node {
+#   calculator: "TfLiteConverterCalculator"
+#   input_stream: "IMAGE:image"
+#   output_stream: "TENSORS:input_tensor"
+#   node_options: {
+#     [type.googleapis.com/mediapipe.TfLiteConverterCalculatorOptions] {
+#       zero_center: false
+#       max_num_channels: 1
+#       output_tensor_float_range {
+#         min: 0.0
+#         max: 1.0
+#       }
+#     }
+#   }
+# }
 
 # Runs a TensorFlow Lite model on GPU that takes an image tensor and outputs a
 # vector of tensors representing, for instance, detection boxes/keypoints and

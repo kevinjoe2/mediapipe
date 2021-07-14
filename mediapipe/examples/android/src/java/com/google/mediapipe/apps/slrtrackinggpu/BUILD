@@ -49,7 +49,7 @@ android_binary(
     manifest = "//mediapipe/examples/android/src/java/com/google/mediapipe/apps/basic:AndroidManifest.xml",
     manifest_values = {
         "applicationId": "com.google.mediapipe.apps.slrtrackinggpu",
-        "appName": "SLR Tracking",
+        "appName": "@string/app_name",
         "mainActivity": "com.google.mediapipe.apps.basic.MainActivity",
         "cameraFacingFront": "False",
         "binaryGraphName": "slr_tracking_gpu.binarypb",

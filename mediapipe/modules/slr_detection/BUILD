@@ -36,6 +36,7 @@ mediapipe_simple_subgraph(
         "//mediapipe/calculators/tensor:image_to_tensor_calculator",
         "//mediapipe/calculators/tensor:inference_calculator",
         "//mediapipe/calculators/tensor:tensors_to_classification_calculator",
+        "//mediapipe/calculators/tflite:tflite_converter_calculator",
         #"//mediapipe/calculators/tensor:tensors_to_floats_calculator",
         #"//mediapipe/calculators/tensor:tensors_to_landmarks_calculator",
         #"//mediapipe/calculators/util:landmark_letterbox_removal_calculator",

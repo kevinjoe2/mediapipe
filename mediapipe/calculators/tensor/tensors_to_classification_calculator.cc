@@ -148,18 +148,26 @@ absl::Status TensorsToClassificationCalculator::Process(CalculatorContext* cc) {
           raw_scores[i] < options_.min_score_threshold()) {
         continue;
       }
-      Classification* classification =
-          classification_list->add_classification();
-      classification->set_index(i);
-      classification->set_score(raw_scores[i]);
-      LOG(ERROR) << i << ":" << raw_scores[i] << ",  ";
+      //if (raw_scores[i] >= 0.8f) {
+        Classification* classification = classification_list->add_classification();
+        classification->set_index(i);
+        classification->set_score(raw_scores[i]);
+        LOG(ERROR) << i << ":" << raw_scores[i] << ",  ";
+        if (label_map_loaded_) {
+          classification->set_label(label_map_[i]);
+        }
+      //}
+    }
+    if(classification_list->classification_size() == 0) {
+      Classification* classification = classification_list->add_classification();
+      classification->set_index(0);
+      classification->set_score(0);
       if (label_map_loaded_) {
-        classification->set_label(label_map_[i]);
+        classification->set_label("");
       }
     }
     LOG(ERROR) << "\n";
   }
-
   // Note that partial_sort will raise error when top_k_ >
   // classification_list->classification_size().
   CHECK_GE(classification_list->classification_size(), top_k_);
